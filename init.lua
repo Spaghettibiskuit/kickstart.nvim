@@ -479,6 +479,18 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'linux-cultist/venv-selector.nvim',
+    dependencies = {
+      { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
+    },
+    ft = 'python', -- Load when opening Python files
+    opts = {
+      options = {}, -- plugin-wide options
+      search = {}, -- custom search definitions
+    },
+  },
+
   -- LSP Plugins
   {
     -- Main LSP Configuration
@@ -523,7 +535,7 @@ require('lazy').setup({
       --
       -- Thus, Language Servers are external tools that must be installed separately from
       -- Neovim. This is where `mason` and related plugins come into play.
-      --
+
       -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
       -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
@@ -602,7 +614,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -657,6 +669,8 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
+        'black',
+        'isort',
         -- You can add other tools here that you want Mason to install
       })
 
@@ -688,8 +702,8 @@ require('lazy').setup({
       format_on_save = function(bufnr)
         -- You can specify filetypes to autoformat on save here:
         local enabled_filetypes = {
-          -- lua = true,
-          -- python = true,
+          lua = true,
+          python = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
@@ -704,7 +718,7 @@ require('lazy').setup({
       formatters_by_ft = {
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -889,7 +903,7 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- ensure basic parser are installed
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = { 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
@@ -947,7 +961,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
@@ -958,7 +972,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
