@@ -643,7 +643,11 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
+        html = {},
+        cssls = {},
+        tailwindcss = {},
+        jsonls = {},
 
         stylua = {}, -- Used to format Lua code
 
@@ -693,6 +697,8 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'black',
         'isort',
+        'prettierd',
+        'prettier',
         -- You can add other tools here that you want Mason to install
       })
 
@@ -726,6 +732,10 @@ require('lazy').setup({
         local enabled_filetypes = {
           lua = true,
           python = true,
+          javascript = true,
+          json = true,
+          html = true,
+          css = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
@@ -741,9 +751,12 @@ require('lazy').setup({
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
-        --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        css = { 'prettierd', 'prettier', stop_after_first = true },
+        html = { 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'prettierd', 'prettier', stop_after_first = true },
+        --
       },
     },
   },
@@ -925,7 +938,8 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- ensure basic parser are installed
-      local parsers = { 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers =
+        { 'javascript', 'css', 'json', 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
