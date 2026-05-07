@@ -643,6 +643,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
+        svelte = {},
         ts_ls = {},
         html = {},
         cssls = {},
@@ -732,6 +733,8 @@ require('lazy').setup({
         local enabled_filetypes = {
           lua = true,
           python = true,
+          typescript = true,
+          svelte = true,
           javascript = true,
           json = true,
           html = true,
@@ -752,10 +755,12 @@ require('lazy').setup({
         -- Conform can also run multiple formatters sequentially
         python = { 'ruff_organize_imports', 'ruff_format' },
         -- You can use 'stop_after_first' to run the first available formatter from the list
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         css = { 'prettierd', 'prettier', stop_after_first = true },
         html = { 'prettierd', 'prettier', stop_after_first = true },
         json = { 'prettierd', 'prettier', stop_after_first = true },
+        svelte = { 'prettierd', 'prettier', stop_after_first = true },
         --
       },
     },
@@ -938,8 +943,25 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- ensure basic parser are installed
-      local parsers =
-        { 'javascript', 'css', 'json', 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = {
+        'typescript',
+        'svelte',
+        'javascript',
+        'css',
+        'json',
+        'python',
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+      }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
