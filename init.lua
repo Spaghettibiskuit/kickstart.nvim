@@ -637,6 +637,7 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         basedpyright = {},
+        bashls = {},
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -700,6 +701,8 @@ require('lazy').setup({
         'prettierd',
         'prettier',
         'markdownlint',
+        'shellcheck',
+        'shfmt',
         -- You can add other tools here that you want Mason to install
       })
 
@@ -739,6 +742,8 @@ require('lazy').setup({
           json = true,
           html = true,
           css = true,
+          sh = true,
+          bash = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
@@ -754,6 +759,8 @@ require('lazy').setup({
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
         python = { 'ruff_organize_imports', 'ruff_format' },
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
         -- You can use 'stop_after_first' to run the first available formatter from the list
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
