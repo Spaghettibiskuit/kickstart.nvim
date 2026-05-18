@@ -278,6 +278,38 @@ require('lazy').setup({
     },
     cmd = { 'CsvViewEnable', 'CsvViewDisable', 'CsvViewToggle' },
   },
+  {
+    'fico-xpress/mosel-vim-plugin',
+    ft = { 'mosel', 'mos' },
+    init = function()
+      -- Directly maps the .mos extension to the 'mosel' filetype
+      vim.filetype.add { extension = { mos = 'mosel' } }
+    end,
+    config = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'mosel',
+        callback = function()
+          vim.api.nvim_set_hl(0, 'moselStatement', {
+            fg = '#98c379',
+            ctermfg = 'LightGreen',
+          })
+          vim.api.nvim_set_hl(0, 'moselOperator', {
+            fg = '#FFB7C5',
+            ctermfg = 'LightMagenta',
+          })
+          vim.api.nvim_set_hl(0, 'moselString', {
+            fg = '#88C0D0',
+            ctermfg = 'LightBlue',
+          })
+          vim.api.nvim_set_hl(0, 'moselClass', {
+            fg = '#D08770',
+            ctermfg = 'LightYellow',
+          })
+          pcall(function() require('mini.statusline').setup { use_icons = vim.g.have_nerd_font } end)
+        end,
+      })
+    end,
+  },
   { 'NMAC427/guess-indent.nvim', opts = {} },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
