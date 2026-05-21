@@ -10,6 +10,8 @@ return {
   ---@type Gitsigns.Config
   ---@diagnostic disable-next-line: missing-fields
   opts = {
+    max_file_length = 100000,
+
     on_attach = function(bufnr)
       local gitsigns = require 'gitsigns'
 
