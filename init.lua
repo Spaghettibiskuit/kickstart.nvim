@@ -279,6 +279,21 @@ require('lazy').setup({
     cmd = { 'CsvViewEnable', 'CsvViewDisable', 'CsvViewToggle' },
   },
   {
+    'vimwiki/vimwiki',
+    init = function()
+      vim.g.vimwiki_path = '~/vimwiki/'
+      vim.g.vimwiki_syntax = 'markdown'
+      vim.g.vimwiki_ext = 'md'
+      vim.g.vimwiki_global_ext = 0
+    end,
+    config = function()
+      vim.api.nvim_create_autocmd('BufNewFile', {
+        pattern = '*diary/*.md',
+        command = "0r! ~/bin/vimwiki-diary-tpl.py '%'",
+      })
+    end,
+  },
+  {
     'fico-xpress/mosel-vim-plugin',
     ft = { 'mosel', 'mos' },
     init = function()
