@@ -908,15 +908,23 @@ require('lazy').setup({
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
+        -- use the night style
+        style = 'night',
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
+        on_highlights = function(hl, c)
+          hl.Comment = { fg = '#899499' }
+          hl.LineNr = { fg = '#b2beb5' }
+          hl.LineNrAbove = { fg = '#b2beb5' }
+          hl.LineNrBelow = { fg = '#b2beb5' }
+        end,
       }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'tokyonight'
     end,
   },
 
@@ -984,6 +992,7 @@ require('lazy').setup({
       -- ensure basic parser are installed
       local parsers = {
         'typescript',
+        'jsdoc',
         'svelte',
         'javascript',
         'css',
