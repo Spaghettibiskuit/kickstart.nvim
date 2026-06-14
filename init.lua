@@ -262,6 +262,24 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   {
+    'lervag/vimtex',
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      local texlive_bin = '/usr/local/texlive/2026/bin/x86_64-linux'
+      if vim.fn.isdirectory(texlive_bin) == 1 then vim.env.PATH = texlive_bin .. ':' .. vim.env.PATH end
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = 'zathura'
+
+      -- 2. Ensure VimTeX uses the active Neovim servername
+      vim.g.vimtex_compiler_method = 'latexmk'
+
+      -- 3. The Secret Sauce for modern Neovim
+      -- If v:servername is empty (rare but happens), fallback to a standard pipe
+      if vim.v.servername == '' then vim.fn.serverstart '/tmp/nvim.pipe' end
+    end,
+  },
+  {
     'hat0uma/csvview.nvim',
     ---@module "csvview"
     ---@type CsvView.Options
@@ -1065,6 +1083,8 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
           local buf, filetype = args.buf, args.match
+
+          if filetype == 'tex' or filetype == 'latex' then return end
 
           local language = vim.treesitter.language.get_lang(filetype)
           if not language then return end

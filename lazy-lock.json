@@ -31,6 +31,7 @@
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
   "tokyonight.nvim": { "branch": "main", "commit": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6" },
   "venv-selector.nvim": { "branch": "main", "commit": "bcb2f58533c59b01565285eba49693f00bc460f5" },
+  "vimtex": { "branch": "master", "commit": "24e229914182ff301496a3e2c4214b28c4928d3f" },
   "vimwiki": { "branch": "dev", "commit": "a54a3002e229c4b43d69ced170ff77663a5b2c40" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
 }
