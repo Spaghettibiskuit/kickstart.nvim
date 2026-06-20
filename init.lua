@@ -20,7 +20,7 @@
 =====================================================================
 =====================================================================
 
-What is Kickstart?
+what is Kickstart?
 
   Kickstart.nvim is *not* a distribution.
 
@@ -41,7 +41,7 @@ What is Kickstart?
     - :help lua-guide
     - (or HTML version): https://neovim.io/doc/user/lua-guide.html
 
-Kickstart Guide:
+kickstart Guide:
 
   TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
 
@@ -76,12 +76,12 @@ Kickstart Guide:
     Feel free to delete them once you know what you're doing, but they should serve as a guide
     for when you are first encountering a few different constructs in your Neovim config.
 
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
+if you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
 
-I hope you enjoy your Neovim journey,
+i hope you enjoy your Neovim journey,
 - TJ
 
-P.S. You can delete this when you're done too. It's your config now! :)
+p.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- Set <space> as the leader key
@@ -1084,7 +1084,7 @@ require('lazy').setup({
         callback = function(args)
           local buf, filetype = args.buf, args.match
 
-          if filetype == 'tex' or filetype == 'latex' then return end
+          if filetype == 'tex' or filetype == 'latex' or filetype == 'bib' or filetype == 'bibtex' then return end
 
           local language = vim.treesitter.language.get_lang(filetype)
           if not language then return end
@@ -1153,6 +1153,8 @@ require('lazy').setup({
     },
   },
 })
+-- Force NeoVim to execute the low-level visual block byte-character
+vim.keymap.set('n', '<C-v>', function() vim.cmd 'normal! \x16' end, { noremap = true, silent = true, desc = 'Force Visual Block Mode' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
