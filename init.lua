@@ -262,6 +262,79 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   {
+    'Vigemus/iron.nvim',
+    config = function()
+      local iron = require 'iron.core'
+      local view = require 'iron.view'
+      local common = require 'iron.fts.common'
+
+      iron.setup {
+        config = {
+          -- Whether a repl should be discarded or not
+          scratch_repl = true,
+          -- Your repl definitions come here
+          repl_definition = {
+            sh = {
+              -- Can be a table or a function that
+              -- returns a table (see below)
+              command = { 'bash' },
+            },
+            python = {
+              command = { 'python3' },
+              format = common.bracketed_paste_python,
+              block_dividers = { '# %%', '#%%' },
+              env = { PYTHON_BASIC_REPL = '1' }, --this is needed for python3.13 and up.
+            },
+          },
+          -- set the file type of the newly created repl to ft
+          -- bufnr is the buffer id of the REPL and ft is the filetype of the
+          -- language being used for the REPL.
+          repl_filetype = function(bufnr, ft)
+            return ft
+            -- or return a string name such as the following
+            -- return "iron"
+          end,
+          -- Send selections to the DAP repl if an nvim-dap session is running.
+          dap_integration = true,
+          -- How the repl window will be displayed
+          repl_open_cmd = view.split.vertical.rightbelow '%40',
+        },
+        -- Iron doesn't set keymaps by default anymore.
+        -- You can set them here or manually add keymaps to the functions in iron.core
+        keymaps = {
+          toggle_repl = '<Bslash>rr',
+          restart_repl = '<Bslash>rR',
+          send_motion = '<Bslash>sc',
+          visual_send = '<Bslash>sc',
+          send_file = '<Bslash>sf',
+          send_line = '<Bslash>sl',
+          send_paragraph = '<Bslash>sp',
+          send_until_cursor = '<Bslash>su',
+          send_mark = '<Bslash>sm',
+          send_code_block = '<Bslash>sb',
+          send_code_block_and_move = '<Bslash>sn',
+          mark_motion = '<Bslash>mc',
+          mark_visual = '<Bslash>mc',
+          remove_mark = '<Bslash>md',
+          cr = '<Bslash>s<cr>',
+          interrupt = '<Bslash>s<Bslash>',
+          exit = '<Bslash>sq',
+          clear = '<Bslash>cl',
+        },
+        -- If the highlight is on, you can change how it looks
+        -- For the available options, check nvim_set_hl
+        highlight = {
+          italic = true,
+        },
+        ignore_blank_lines = true, -- ignore blank lines when sending visual select lines
+      }
+
+      -- iron also has a list of commands, see :h iron-commands for all available commands
+      vim.keymap.set('n', '<Bslash>rf', '<cmd>IronFocus<cr>')
+      vim.keymap.set('n', '<Bslash>rh', '<cmd>IronHide<cr>')
+    end,
+  },
+  {
     'lervag/vimtex',
     lazy = false, -- we don't want to lazy load VimTeX
     -- tag = "v2.15", -- uncomment to pin to a specific release
