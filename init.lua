@@ -895,6 +895,7 @@ require('lazy').setup({
           css = true,
           sh = true,
           bash = true,
+          markdown = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
@@ -919,7 +920,7 @@ require('lazy').setup({
         html = { 'prettierd', 'prettier', stop_after_first = true },
         json = { 'prettierd', 'prettier', stop_after_first = true },
         svelte = { 'prettierd', 'prettier', stop_after_first = true },
-        --
+        markdown = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
