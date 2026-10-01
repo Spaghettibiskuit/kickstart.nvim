@@ -787,7 +787,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        basedpyright = {},
+        basedpyright = { settings = { basedpyright = { analysis = { typeCheckingMode = 'standard' } } } },
         bashls = {},
         -- rust_analyzer = {},
         --
